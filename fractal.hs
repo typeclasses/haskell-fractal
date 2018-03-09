@@ -30,12 +30,12 @@ realize (z, iter) = (fromIntegral iter - log (log (magnitude z))) /
                      fromIntegral maxIters
 
 render :: Int -> Int -> PixelRGB8
-render xi yi = PixelRGB8 40 ((grayify . realize $ fractal (x :+ y) (0 :+ 0) 0) + 10)180
+render xi yi = PixelRGB8 40 (grayify . realize $ fractal (x :+ y) (0 :+ 0) 0) 130
   where
     (x, y)           = (trans x0 x1 width xi, trans y0 y1 height yi)
     trans n0 n1 a ni = (n1 - n0) * fromIntegral ni / fromIntegral a + n0
     grayify f        = truncate . (* 180) . sharpen $ 1 - f
-    sharpen v        = 1 - exp (-exp ((v - 0.92) / 0.02))
+    sharpen v        = 1 - exp (-exp ((v - 0.95) / 0.031))
 
 main :: IO ()
 main = savePngImage "out.png" $ generateImg
