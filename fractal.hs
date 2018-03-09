@@ -1,4 +1,4 @@
-import Codec.Picture  (generateImage, writePng)
+import Codec.Picture
 import Data.Word      (Word8)
 import Data.Complex   (Complex(..), magnitude)
 
@@ -11,10 +11,10 @@ x0, y0, x1, y1 :: Double
 (x1, y1) = (-0.8075, y0 + (x1 - x0) * aspectRatio)
 
 width, height :: Int
-(width, height) = (10000, round . (* aspectRatio) . fromIntegral $ width)
+(width, height) = (1000, round . (* aspectRatio) . fromIntegral $ width)
 
 maxIters :: Int
-maxIters = 1200
+maxIters = 600
 
 
 fractal :: RealFloat a => Complex a -> Complex a -> Int -> (Complex a, Int)
@@ -29,13 +29,17 @@ realize :: RealFloat a => (Complex a, Int) -> a
 realize (z, iter) = (fromIntegral iter - log (log (magnitude z))) /
                      fromIntegral maxIters
 
-render :: Int -> Int -> Word8
-render xi yi = grayify . realize $ fractal (x :+ y) (0 :+ 0) 0
+render :: Int -> Int -> PixelRGB8
+render xi yi = PixelRGB8 40 ((grayify . realize $ fractal (x :+ y) (0 :+ 0) 0) + 10)180
   where
     (x, y)           = (trans x0 x1 width xi, trans y0 y1 height yi)
     trans n0 n1 a ni = (n1 - n0) * fromIntegral ni / fromIntegral a + n0
-    grayify f        = truncate . (* 255) . sharpen $ 1 - f
-    sharpen v        = 1 - exp (-exp ((v - 0.92) / 0.031))
+    grayify f        = truncate . (* 180) . sharpen $ 1 - f
+    sharpen v        = 1 - exp (-exp ((v - 0.92) / 0.02))
 
 main :: IO ()
-main = writePng "out.png" $ generateImage render width height
+main = savePngImage "out.png" $ generateImg
+
+
+generateImg :: DynamicImage
+generateImg = ImageRGB8 (generateImage render 1200 600)
