@@ -16,7 +16,6 @@ width, height :: Int
 maxIters :: Int
 maxIters = 600
 
-
 fractal :: RealFloat a => Complex a -> Complex a -> Int -> (Complex a, Int)
 fractal c z iter
     | iter >= maxIters = (1 :+ 1, 0)  -- invert values inside the holes
