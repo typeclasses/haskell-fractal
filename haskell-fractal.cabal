@@ -14,5 +14,5 @@ executable fractal
   main-is:              fractal.hs
   build-depends:        base
                       , JuicyPixels
-  ghc-options:          -O2 -Wall -fforce-recomp
+  ghc-options:          -O2 -Wall -fforce-recomp -fprof-auto -prof -rtsopts
   default-language:     Haskell2010
