@@ -45,3 +45,8 @@ To make test renderings a `width` of `2000` should be enough, for a final render
 the `width` may be increased to something like `10000`.
 
 Finally [ShareLatex](http://sharelatex.com) chimed in to compile the PDF.
+
+## Typeclasses changes
+
+We made some changes to this code to produce a color image for use on our web site. We wrote [an extensive analysis](https://typeclasses.com/art/mandelbrot) of this program and the changes we made.
+
