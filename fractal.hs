@@ -37,8 +37,9 @@ render xi yi = PixelRGB8 40 (grayify . realize $ fractal (x :+ y) (0 :+ 0) 0) 13
     sharpen v        = 1 - exp (-exp ((v - 0.95) / 0.031))
 
 main :: IO ()
-main = savePngImage "out.png" $ generateImg
+main = writePng "out.png" $ generateImage render 1200 600
 
 
-generateImg :: DynamicImage
-generateImg = ImageRGB8 (generateImage render 1200 600)
+-- I think I had originally made this more complicated than it needed to be, but I need to re-test the above before I commit to getting rid of this.
+--generateImg :: DynamicImage
+--generateImg = ImageRGB8 (generateImage render 1200 600)
